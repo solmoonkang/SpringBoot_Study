@@ -56,11 +56,13 @@ public class BoardService {
         return boardDto;
     }
 
+    //
     @Transactional      // 선언적 트랜잭션이라 부르며, 트랜잭션을 적용하는 어노테이션
     public Long savePost(BoardDto boardDto) {
         return boardRepository.save(boardDto.toEntity()).getId();   // JpaRepository에서 정의된 메소드로, DB에 INSERT, UPDATE를 담당함 -> 매개변수로는 Entity를 전달
     }
 
+    // 게시글 삭제
     @Transactional
     public void deletePost(Long id) {
         // deleteById() :

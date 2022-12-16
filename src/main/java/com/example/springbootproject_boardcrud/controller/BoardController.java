@@ -40,6 +40,7 @@ public class BoardController {
     }
 
     // TODO : 게시글 상세조회 및 수정 페이지, 게시글 수정 및 삭제
+    // 게시글 상세조회 페이지
     @GetMapping("/post/{no}")
     public String detail(@PathVariable("no") Long no, Model model) {
         // 유동적으로 변하는 PathVariable을 처리하는 방법
@@ -50,6 +51,7 @@ public class BoardController {
         return "board/detail.html";
     }
 
+    // 게시글 수정 페이지
     @GetMapping("/post/edit/{no}")
     public String edit(@PathVariable("no") Long no, Model model) {
         BoardDto boardDto = boardService.getPost(no);
@@ -58,6 +60,7 @@ public class BoardController {
         return "board/update.html";
     }
 
+    // 게시글 수정
     @PutMapping("/post/edit/{no}")
     public String update(BoardDto boardDto) {
         // update() -> 게시글 추가에서 사용하는 boardService.savePost() 메소드를 같이 사용하고 있다
@@ -66,6 +69,7 @@ public class BoardController {
         return "redirect";
     }
 
+    // 게시글 삭제
     @DeleteMapping("/post/{no}")
     public String delete(@PathVariable("no") Long no) {
         boardService.deletePost(no);
