@@ -12,7 +12,7 @@ import java.util.List;
 
 @Controller
 @AllArgsConstructor     // Bean 주입 방식과 관련이 있으며, 생성자로 Bean 객체를 받는 방식을 해결해주는 어노테이션
-// 그래서 BoardService 객체를 주입 받을 때 @Autowired 같은 특별한 어노테이션을 부여하지 않음
+                        // 그래서 BoardService 객체를 주입 받을 때 @Autowired 같은 특별한 어노테이션을 부여하지 않음
 public class BoardController {
     private BoardService boardService;
     private final BoardRepository boardRepository;
