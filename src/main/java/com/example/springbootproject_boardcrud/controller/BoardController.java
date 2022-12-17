@@ -17,13 +17,29 @@ public class BoardController {
     private BoardService boardService;
     private final BoardRepository boardRepository;
 
-    // 게시글 목록
+    // 게시글 목록 -> 기존 존재했던 컨트롤러의 매핑함수 list()
     // public String list(Model model) {} -> Model 객체를 통해 View에 데이터를 전달
+    /*
     @GetMapping("/")
     public String list(Model model) {
         List<BoardDto> boardList = boardService.getBoardList();
 
         model.addAttribute("boardList", boardList);
+        return "board/list.html";
+    }
+     */
+
+    // 게시글 목록 - 페이징
+    @GetMapping("/")
+    public String list(Model model, @RequestParam(value = "page", defaultValue = "1") Integer pageNum) {
+        // page 이름으로 넘어오면 파라미터를 받아주고, 없으면 기본 값으로 1을 설정한다
+        // 페이지 번호는 서비스 계층의 getPageList() 함수로 넘겨준다
+        List<BoardDto> boardList = boardService.getBoardList(pageNum);
+        Integer[] pageList = boardService.getPageList(pageNum);
+
+        model.addAttribute("boardList", boardList);
+        model.addAttribute("pageList", pageList);
+
         return "board/list.html";
     }
 
@@ -75,5 +91,17 @@ public class BoardController {
         boardService.deletePost(no);
 
         return "redirect";
+    }
+
+    // 게시글 검색
+    @GetMapping("/board/search")
+    public String search(@RequestParam(value = "keyword") String keyword, Model model) {
+        // 기존에 존재했던 컨트롤러에서 매핑함수 search()를 작성한다
+        // 특별한 것은 없고, 클라이언트에서 넘겨주는 keyword를 검색어로 활용한
+        List<BoardDto> boardDtoList = boardService.searchPosts(keyword);
+
+        model.addAttribute("boardList", boardDtoList);
+
+        return "board/list.html";
     }
 }
